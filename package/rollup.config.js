@@ -4,7 +4,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import resolve from '@rollup/plugin-node-resolve';
 import url from '@rollup/plugin-url';
-import postcss from 'rollup-plugin-postcss';
 import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
@@ -33,18 +32,18 @@ export default {
   plugins: [
     peerDepsExternal(),
     url({ exclude: ['**/*.svg'] }),
-    resolve(),
     commonjs(commonjsOptions),
     babel({
+      babelrc: false,
       babelHelpers: 'runtime',
       exclude: commonjsOptions.exclude,
       plugins: ['@babel/plugin-transform-runtime'],
     }),
+    resolve(),
     typescript({
       clean: true,
       exclude: commonjsOptions.exclude,
     }),
-    postcss(),
     terser(),
   ],
 };
