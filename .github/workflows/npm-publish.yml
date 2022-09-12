@@ -9,24 +9,40 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./package
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+      - name: Install Deps
       - run: npm ci
+        
+      - name: Test
       - run: npm test
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./package
     steps:
+      - name : Checkout
       - uses: actions/checkout@v3
+        
+      - name: Setup Node.js
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+
+      - name: Install dependencies
       - run: npm ci
-#       - run: npm publish
+        
+      - name: Publish to npm
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
