@@ -2,9 +2,9 @@
 
 A react date range picker implementation
 
-## Live Demo
+## npm
 
-<!-- Check out the project running [here](https://codesandbox.io/s/mui-daterange-picker-playground-for-pb-r9rmn?file=/src/App.js)! -->
+<https://www.npmjs.com/package/@zngly/daterange-picker>
 
 ## Usage
 
