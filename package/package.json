@@ -29,9 +29,8 @@
     ],
     "scripts": {
         "start": "react-scripts start",
-        "build": "rimraf build && rollup -c rollup.config.js",
+        "build": "rimraf build && rollup -c",
         "prepublish": "npm run build",
-        "watch": "rollup -c -w",
         "test": ""
     },
     "peerDependencies": {
