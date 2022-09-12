@@ -5,6 +5,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import resolve from '@rollup/plugin-node-resolve';
 import url from '@rollup/plugin-url';
 import { terser } from 'rollup-plugin-terser';
+import copy from 'rollup-plugin-copy'
 
 import pkg from './package.json';
 
@@ -45,5 +46,10 @@ export default {
       exclude: commonjsOptions.exclude,
     }),
     terser(),
+    copy({
+      targets: [
+        { src: '../README.md', dest: 'build/' },
+      ]
+    })
   ],
 };
