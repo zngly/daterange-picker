@@ -61,7 +61,7 @@ interface DefinedRange {
 | `maxDate`             | `Date` or `string`       | _optional_ | 10 years from now | max date allowed in range                                             |
 | `definedRanges`       | `DefinedRange[]`         | _optional_ | -                 | custom defined ranges to show in the list                             |
 | `closeOnClickOutside` | `boolean`                | _optional_ | `true`            | defines if DateRangePicker will be closed when clicking outside of it |
-| `wrapperClassName`    | `object`                 | _optional_ | `undefined`       | defines additional wrapper style classes                              |
+| `className`           | `object`                 | _optional_ | `undefined`       | defines additional wrapper style classes                              |
 | `locale`              | `Locale` (from date-dns) | _optional_ | `undefined`       | defines locale to use (from date-fns package)                         |
 
 ## Notes

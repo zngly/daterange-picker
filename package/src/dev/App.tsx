@@ -19,7 +19,7 @@ function App() {
                 toggle={() => {
                     setOpen(!open);
                 }}
-                wrapperClassName='daterange-picker-wrapper'
+                className='daterange-picker-wrapper'
             />
         </div>
     );
