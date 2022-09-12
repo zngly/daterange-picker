@@ -47,7 +47,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     };
 
     return (
-        <Grid container justifyContent='space-between' alignItems='center'>
+        <Grid className='drp-month-header' container justifyContent='space-between' alignItems='center'>
             <Grid item sx={{ padding: '5px' }}>
                 <IconButton
                     sx={{
@@ -58,13 +58,13 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                     }}
                     disabled={prevDisabled}
                     onClick={onClickPrevious}
-                    // size="large"
+                    className='drp-header_chevron'
                 >
                     <ChevronLeft color={prevDisabled ? 'disabled' : 'action'} />
                 </IconButton>
             </Grid>
             <Grid item>
-                <FormControl variant='standard'>
+                <FormControl variant='standard' className='drp-header_months'>
                     <Select value={getMonth(date)} onChange={handleMonthChange} MenuProps={{ disablePortal: true }}>
                         {MONTHS.map((month, idx) => (
                             <MenuItem key={month} value={idx}>
@@ -76,7 +76,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
             </Grid>
 
             <Grid item>
-                <FormControl variant='standard'>
+                <FormControl variant='standard' className='drp-header_year'>
                     <Select value={getYear(date)} onChange={handleYearChange} MenuProps={{ disablePortal: true }}>
                         {generateYears(date, 30).map((year) => (
                             <MenuItem key={year} value={year}>
@@ -85,8 +85,6 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                         ))}
                     </Select>
                 </FormControl>
-
-                {/* <Typography>{format(date, "MMMM YYYY")}</Typography> */}
             </Grid>
             <Grid item sx={{ padding: '5px' }}>
                 <IconButton
@@ -98,7 +96,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                     }}
                     disabled={nextDisabled}
                     onClick={onClickNext}
-                    // size="large"
+                    className='drp-header_chevron'
                 >
                     <ChevronRight color={nextDisabled ? 'disabled' : 'action'} />
                 </IconButton>

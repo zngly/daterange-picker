@@ -26,6 +26,7 @@ const Day: React.FunctionComponent<DayProps> = ({
 }: DayProps) => {
     return (
         <Box
+            className='drp-day'
             sx={{
                 display: 'flex',
                 // eslint-disable-next-line no-nested-ternary

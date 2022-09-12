@@ -58,8 +58,9 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
         helpers,
         handlers,
     };
+
     return (
-        <Paper elevation={5} square>
+        <Paper elevation={5} square className='drp-menu'>
             <Grid container direction='row' wrap='nowrap'>
                 <Grid>
                     <DefinedRanges selectedRange={dateRange} ranges={ranges} setRange={setDateRange} />

@@ -54,7 +54,7 @@ const DateRangePickerWrapper: React.FunctionComponent<DateRangePickerWrapperProp
                 />
             )}
 
-            <Box sx={{ position: 'relative', zIndex: 1 }} className={className}>
+            <Box sx={{ position: 'relative', zIndex: 1 }} className={'drp-wrapper ' + className}>
                 <DateRangePicker {...props} />
             </Box>
         </Box>
