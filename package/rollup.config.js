@@ -1,23 +1,21 @@
 import typescript from 'rollup-plugin-typescript2';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
-import peerDepsExternal from 'rollup-plugin-peer-deps-external'
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import resolve from '@rollup/plugin-node-resolve';
 import url from '@rollup/plugin-url';
-import postcss from 'rollup-plugin-postcss'
-import { terser } from 'rollup-plugin-terser'
-
-// import eslint from 'rollup-plugin-eslint';
-
+import postcss from 'rollup-plugin-postcss';
+import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 
 const commonjsOptions = {
   include: 'node_modules/**',
+  exclude: ['node_modules/**', 'src/dev/**', 'src/dev/index.tsx', '**/__tests__', '**/*.test.ts', '**/dev/**'],
 };
 
 export default {
-  input: 'src/main.ts',
+  input: 'src/daterange-picker/main.ts',
   // output commonJs and ES module versions
   output: [
     {
@@ -39,13 +37,14 @@ export default {
     commonjs(commonjsOptions),
     babel({
       babelHelpers: 'runtime',
-      exclude: 'node_modules/**',
-      plugins: ["@babel/plugin-transform-runtime"],
+      exclude: commonjsOptions.exclude,
+      plugins: ['@babel/plugin-transform-runtime'],
     }),
     typescript({
       clean: true,
+      exclude: commonjsOptions.exclude,
     }),
     postcss(),
-    terser()
+    terser(),
   ],
 };
