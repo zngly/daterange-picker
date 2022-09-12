@@ -1,7 +1,7 @@
 {
     "name": "@zngly/daterange-picker",
     "version": "1.0.0",
-    "description": "A react date range picker implementation using @mui.",
+    "description": "A react date range picker implementation",
     "author": "zngly",
     "license": "MIT",
     "repository": "https://github.com/zngly/daterange-picker",
