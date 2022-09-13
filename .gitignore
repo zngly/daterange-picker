@@ -24,6 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # NPM README file
-package/README.md
 /.idea/
 /package/.npmrc
