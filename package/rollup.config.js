@@ -5,7 +5,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import resolve from '@rollup/plugin-node-resolve';
 import url from '@rollup/plugin-url';
 import { terser } from 'rollup-plugin-terser';
-import copy from 'rollup-plugin-copy'
+import copy from 'rollup-plugin-copy';
 
 import pkg from './package.json';
 
@@ -15,7 +15,7 @@ const commonjsOptions = {
 };
 
 export default {
-  input: 'src/daterange-picker/main.ts',
+  input: 'src/daterange-picker/index.ts',
   // output commonJs and ES module versions
   output: [
     {
@@ -43,13 +43,40 @@ export default {
     resolve(),
     typescript({
       clean: true,
-      exclude: commonjsOptions.exclude,
+      tsconfigDefaults: {
+        compilerOptions: {
+          baseUrl: './src/daterange-picker',
+          outDir: 'build',
+          target: 'es5',
+          lib: ['dom', 'dom.iterable', 'esnext'],
+          allowJs: true,
+          skipLibCheck: true,
+          esModuleInterop: true,
+          allowSyntheticDefaultImports: true,
+          strict: true,
+          forceConsistentCasingInFileNames: true,
+          noFallthroughCasesInSwitch: true,
+          module: 'esnext',
+          moduleResolution: 'node',
+          resolveJsonModule: true,
+          isolatedModules: true,
+          noEmit: true,
+          jsx: 'react-jsx',
+          downlevelIteration: true,
+          sourceMap: true,
+          declaration: true,
+          noImplicitReturns: true,
+          noImplicitThis: true,
+          noImplicitAny: true,
+          strictNullChecks: true,
+        },
+        include: ['src/daterange-picker'],
+        exclude: ['node_modules', 'build', 'example', 'rollup.config.js', 'src/index.*', 'src/dev'],
+      },
     }),
     terser(),
     copy({
-      targets: [
-        { src: '../README.md', dest: 'build/' },
-      ]
-    })
+      targets: [{ src: '../README.md', dest: 'build/' }],
+    }),
   ],
 };

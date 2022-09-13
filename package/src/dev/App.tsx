@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 
-import { DateRangePicker } from '../daterange-picker/main';
+import { DateRangePicker } from '../daterange-picker';
+// import { DateRangePicker } from '../../build';
 
 function App() {
     const [open, setOpen] = useState(false);
