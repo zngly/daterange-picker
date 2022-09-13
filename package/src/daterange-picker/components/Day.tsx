@@ -26,7 +26,12 @@ const Day: React.FunctionComponent<DayProps> = ({
 }: DayProps) => {
     return (
         <Box
-            className='drp-day'
+            className={
+                'drp-day' +
+                (startOfRange || endOfRange ? ' drp-day-range' : '') +
+                (highlighted ? ' drp-day-highlighted' : '') +
+                (disabled ? ' drp-day-disabled' : '')
+            }
             sx={{
                 display: 'flex',
                 // eslint-disable-next-line no-nested-ternary
