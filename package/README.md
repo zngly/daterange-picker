@@ -63,7 +63,3 @@ interface DefinedRange {
 | `closeOnClickOutside` | `boolean`                | _optional_ | `true`            | defines if DateRangePicker will be closed when clicking outside of it |
 | `className`           | `object`                 | _optional_ | `undefined`       | defines additional wrapper style classes                              |
 | `locale`              | `Locale` (from date-dns) | _optional_ | `undefined`       | defines locale to use (from date-fns package)                         |
-
-## Notes
-
-This repo is a fork of [mui-daterange-picker](https://github.com/ricard33/mui-daterange-picker)
