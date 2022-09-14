@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-newline */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Divider, Grid, Paper, Typography } from '@mui/material';
 import { differenceInCalendarMonths, format } from 'date-fns';
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
@@ -50,7 +50,22 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
     } = props;
 
     const { startDate, endDate } = dateRange;
-    const canNavigateCloser = differenceInCalendarMonths(secondMonth, firstMonth) >= 2;
+
+    const canNavigateCloser = useMemo(
+        () => differenceInCalendarMonths(secondMonth, firstMonth) > 2,
+        [secondMonth, firstMonth]
+    );
+
+    const canNavigateBackwards = useMemo(
+        () => differenceInCalendarMonths(firstMonth, minDate) > 0,
+        [firstMonth, minDate]
+    );
+
+    const canNavigateForwards = useMemo(
+        () => differenceInCalendarMonths(maxDate, secondMonth) > 0,
+        [maxDate, secondMonth]
+    );
+
     const commonProps = {
         dateRange,
         minDate,
@@ -88,7 +103,7 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
                             {...commonProps}
                             value={firstMonth}
                             setValue={setFirstMonth}
-                            navState={[true, canNavigateCloser]}
+                            navState={[canNavigateBackwards, canNavigateCloser]}
                             marker={MARKERS.FIRST_MONTH}
                             locale={locale}
                         />
@@ -97,7 +112,7 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
                             {...commonProps}
                             value={secondMonth}
                             setValue={setSecondMonth}
-                            navState={[canNavigateCloser, true]}
+                            navState={[canNavigateCloser, canNavigateForwards]}
                             marker={MARKERS.SECOND_MONTH}
                             locale={locale}
                         />
