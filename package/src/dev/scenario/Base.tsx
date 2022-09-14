@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import './App.css';
+import { DateRangePicker } from 'src/daterange-picker';
+import Page from '../Page';
 
-import { DateRangePicker } from '../daterange-picker';
-// import { DateRangePicker } from '../../build';
+type Props = {};
 
-function App() {
+const Base = (props: Props) => {
     const [open, setOpen] = useState(false);
 
     const toggle = () => setOpen(!open);
@@ -24,6 +24,6 @@ function App() {
             />
         </div>
     );
-}
+};
 
-export default App;
+export default Base;
