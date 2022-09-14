@@ -10,7 +10,7 @@ const Error = () => {
 
     useEffect(() => {
         navigate('/');
-    }, []);
+    }, [navigate]);
 
     return <></>;
 };

@@ -42,7 +42,7 @@ const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
                       locale.localize?.day((d + weekStartsOn) % 7, { width: 'short', context: 'standalone' })
                   )
                 : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-        [locale]
+        [locale, weekStartsOn]
     );
     const [back, forward] = props.navState;
 

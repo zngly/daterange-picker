@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import { Container, Typography, Box, Divider, Stack, Card } from '@mui/material';
+import { Container, Typography, Divider, Stack, Card } from '@mui/material';
 import { Link, Outlet, useOutlet } from 'react-router-dom';
 import Page from './Page';
 
