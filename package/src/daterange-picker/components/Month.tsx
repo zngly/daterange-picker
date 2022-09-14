@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Paper, Grid, Typography } from '@mui/material';
 import { getDate, isSameMonth, isToday, format, isWithinInterval } from 'date-fns';
 import { chunks, getDaysInMonth, isStartOfRange, isEndOfRange, inDateRange, isRangeSameDay } from '../utils';
@@ -35,12 +35,15 @@ const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
     const { helpers, handlers, value: date, dateRange, marker, setValue: setDate, minDate, maxDate, locale } = props;
 
     const weekStartsOn = locale?.options?.weekStartsOn || 0;
-    const WEEK_DAYS =
-        typeof locale !== 'undefined'
-            ? [...Array(7).keys()].map((d) =>
-                  locale.localize?.day((d + weekStartsOn) % 7, { width: 'short', context: 'standalone' })
-              )
-            : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    const WEEK_DAYS = useMemo(
+        () =>
+            typeof locale !== 'undefined'
+                ? [...Array(7).keys()].map((d) =>
+                      locale.localize?.day((d + weekStartsOn) % 7, { width: 'short', context: 'standalone' })
+                  )
+                : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        [locale, weekStartsOn]
+    );
     const [back, forward] = props.navState;
 
     return (
@@ -53,6 +56,8 @@ const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
                     prevDisabled={!back}
                     onClickPrevious={() => handlers.onMonthNavigate(marker, NavigationAction.Previous)}
                     onClickNext={() => handlers.onMonthNavigate(marker, NavigationAction.Next)}
+                    minDate={minDate}
+                    maxDate={maxDate}
                     locale={locale}
                 />
 

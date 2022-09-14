@@ -6,20 +6,27 @@ import { getMonth, getYear, setMonth, setYear } from 'date-fns';
 
 interface HeaderProps {
     date: Date;
-    // eslint-disable-next-line no-unused-vars
     setDate: (date: Date) => void;
     nextDisabled: boolean;
     prevDisabled: boolean;
     onClickNext: () => void;
     onClickPrevious: () => void;
+    minDate: Date;
+    maxDate: Date;
     locale?: Locale;
 }
 
-const generateYears = (relativeTo: Date, count: number) => {
-    const half = Math.floor(count / 2);
-    return Array(count)
-        .fill(0)
-        .map((_y, i) => relativeTo.getFullYear() - half + i); // TODO: make part of the state
+const generateYears = (minDate: Date, maxDate: Date) => {
+    const years = [];
+
+    // get the min & max years
+    const minYear = minDate.getFullYear();
+    const maxYear = maxDate.getFullYear();
+
+    // loop through the years
+    for (let i = minYear; i <= maxYear; i++) years.push(i);
+
+    return years;
 };
 
 const Header: React.FunctionComponent<HeaderProps> = ({
@@ -29,6 +36,8 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     prevDisabled,
     onClickNext,
     onClickPrevious,
+    minDate,
+    maxDate,
     locale,
 }: HeaderProps) => {
     const MONTHS =
@@ -78,7 +87,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
             <Grid item>
                 <FormControl variant='standard' className='drp-header_year'>
                     <Select value={getYear(date)} onChange={handleYearChange} MenuProps={{ disablePortal: true }}>
-                        {generateYears(date, 30).map((year) => (
+                        {generateYears(minDate, maxDate).map((year) => (
                             <MenuItem key={year} value={year}>
                                 {year}
                             </MenuItem>

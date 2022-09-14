@@ -1,20 +1,18 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 
-import { Box } from '@mui/material';
+import { Box, ClickAwayListener } from '@mui/material';
+
 import DateRangePicker from './DateRangePicker';
-
-// eslint-disable-next-line no-unused-vars
 import { DateRange, DefinedRange } from '../types';
 
 export interface DateRangePickerWrapperProps {
     open: boolean;
-    toggle: () => void;
+    onClose?: () => void;
+    onChange?: (dateRange: DateRange) => void;
     initialDateRange?: DateRange;
     definedRanges?: DefinedRange[];
     minDate?: Date | string;
     maxDate?: Date | string;
-    // eslint-disable-next-line no-unused-vars
-    onChange: (dateRange: DateRange) => void;
     closeOnClickOutside?: boolean;
     className?: string;
     locale?: Locale;
@@ -23,41 +21,43 @@ export interface DateRangePickerWrapperProps {
 const DateRangePickerWrapper: React.FunctionComponent<DateRangePickerWrapperProps> = (
     props: DateRangePickerWrapperProps
 ) => {
-    const { closeOnClickOutside, className, toggle, open } = props;
+    const { closeOnClickOutside, className, onClose, open } = props;
 
-    const handleToggle = () => {
+    const handleClose = useCallback(() => {
         if (closeOnClickOutside === false) {
             return;
         }
 
-        toggle();
-    };
+        onClose && onClose();
+    }, [closeOnClickOutside, onClose]);
 
-    const handleKeyPress = (event: any) => event?.key === 'Escape' && handleToggle();
+    const handleKeyPress = useCallback(
+        (event: any) => {
+            event?.key === 'Escape' && handleClose();
+        },
+        [handleClose]
+    );
+
+    useEffect(() => {
+        if (!open) return;
+
+        // add event listener for keypress
+        document.addEventListener('keydown', handleKeyPress);
+
+        // remove event listener on cleanup
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [open, handleKeyPress]);
+
+    if (!open) return <></>;
 
     return (
-        <Box sx={{ position: 'relative' }}>
-            {open && (
-                <Box
-                    sx={{
-                        position: 'fixed',
-                        height: '100vh',
-                        width: '100vw',
-                        bottom: 0,
-                        zIndex: 0,
-                        right: 0,
-                        left: 0,
-                        top: 0,
-                    }}
-                    onKeyPress={handleKeyPress}
-                    onClick={handleToggle}
-                />
-            )}
-
+        <ClickAwayListener onClickAway={handleClose}>
             <Box sx={{ position: 'relative', zIndex: 1 }} className={'drp-wrapper ' + className}>
                 <DateRangePicker {...props} />
             </Box>
-        </Box>
+        </ClickAwayListener>
     );
 };
 
