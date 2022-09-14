@@ -9,6 +9,7 @@ const PopperDemo = () => {
     const anchorRef = React.useRef<HTMLButtonElement>(null);
 
     const handleToggle = () => {
+        console.log(open);
         if (!open) setOpen(true);
         else setOpen(false);
     };
@@ -26,15 +27,15 @@ const PopperDemo = () => {
                 transition
                 disablePortal={false}
             >
-                {({ TransitionProps, placement, ...props }) => {
+                {({ TransitionProps }) => {
                     return (
                         <Grow {...TransitionProps}>
                             <Paper>
                                 <DateRangePicker
                                     open={open}
                                     onClose={() => setOpen(false)}
-                                    minDate={new Date('2021-01-01')}
-                                    maxDate={new Date('2023-12-31')}
+                                    minDate={new window.Date('2022-01-01')}
+                                    maxDate={new window.Date()}
                                 />
                             </Paper>
                         </Grow>

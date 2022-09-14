@@ -59,6 +59,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     const MenuProps = {
         disablePortal: true,
         transformOrigin: { vertical: 'bottom', horizontal: 'center' },
+        anchorOrigin: { vertical: 'top', horizontal: 'center' },
     } as Partial<MenuProps>;
 
     return (

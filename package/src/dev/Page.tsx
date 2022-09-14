@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography } from '@mui/material';
-import { useMatch, useNavigate } from 'react-router-dom';
+import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -11,6 +11,10 @@ type Props = {
 const Page = (props: Props) => {
     const match = useMatch('/');
     const navigate = useNavigate();
+
+    // get the last part of the url
+    const location = useLocation();
+    const path = location.pathname.split('/').pop();
 
     return (
         <div className='app'>
@@ -29,10 +33,12 @@ const Page = (props: Props) => {
                                 <ArrowBackIcon />
                             </IconButton>
                         )}
-                        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+                        <Typography variant='h5' component='div' sx={{ flexGrow: 1 }}>
                             @zngly/date-range-picker
                         </Typography>
-                        <div></div>
+                        <Typography variant='h6' component='div' sx={{ flexGrow: 1, textTransform: 'capitalize' }}>
+                            {path}
+                        </Typography>
                     </Toolbar>
                 </AppBar>
             </header>
