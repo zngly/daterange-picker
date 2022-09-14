@@ -54,8 +54,9 @@ interface DefinedRange {
 
 | Name                  | Type                     | Required   | Default value     | Description                                                           |
 | :-------------------- | :----------------------- | :--------- | :---------------- | :-------------------------------------------------------------------- |
-| `onChange`            | `(DateRange) => void`    | _required_ | -                 | handler function for providing selected date range                    |
-| `toggle`              | `() => void`             | _required_ | -                 | function to show / hide the DateRangePicker                           |
+| `open`                | `boolean`                | _required_ | -                 | If the datepicker is open or not                                      |
+| `onChange`            | `(DateRange) => void`    | _optional_ | -                 | handler function for providing selected date range                    |
+| `onClose`             | `() => void`             | _optional_ | -                 | function to hide the DateRangePicker                                  |
 | `initialDateRange`    | `DateRange`              | _optional_ | `{}`              | initially selected date range                                         |
 | `minDate`             | `Date` or `string`       | _optional_ | 10 years ago      | min date allowed in range                                             |
 | `maxDate`             | `Date` or `string`       | _optional_ | 10 years from now | max date allowed in range                                             |
@@ -63,7 +64,3 @@ interface DefinedRange {
 | `closeOnClickOutside` | `boolean`                | _optional_ | `true`            | defines if DateRangePicker will be closed when clicking outside of it |
 | `className`           | `object`                 | _optional_ | `undefined`       | defines additional wrapper style classes                              |
 | `locale`              | `Locale` (from date-dns) | _optional_ | `undefined`       | defines locale to use (from date-fns package)                         |
-
-## Notes
-
-This repo is a fork of [mui-daterange-picker](https://github.com/ricard33/mui-daterange-picker)

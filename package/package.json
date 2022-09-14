@@ -1,6 +1,6 @@
 {
     "name": "@zngly/daterange-picker",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "description": "A react date range picker implementation",
     "author": "zngly",
     "license": "MIT",

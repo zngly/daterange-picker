@@ -7,7 +7,7 @@ const Base = () => {
 
     return (
         <Container>
-            <Button onClick={() => setOpen(true)} style={{ width: '100px', height: '50px' }}>
+            <Button onClick={() => setOpen(!open)} style={{ width: '100px', height: '50px' }}>
                 Click Me
             </Button>
             <DateRangePicker
