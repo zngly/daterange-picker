@@ -4,6 +4,7 @@ import ChevronRight from '@mui/icons-material/ChevronRight';
 import { getMonth, getYear, setMonth, setYear } from 'date-fns';
 
 import { FormControl, Grid, IconButton, MenuItem, Select, MenuProps, SelectChangeEvent } from '@mui/material';
+import { useAppContext } from './DateRangePickerWrapper';
 
 interface HeaderProps {
     date: Date;
@@ -14,8 +15,6 @@ interface HeaderProps {
     onClickPrevious: () => void;
     minDate: Date;
     maxDate: Date;
-    locale?: Locale;
-    forcePopperFix?: boolean;
 }
 
 const generateYears = (minDate: Date, maxDate: Date) => {
@@ -40,9 +39,9 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     onClickPrevious,
     minDate,
     maxDate,
-    locale,
-    ...props
 }: HeaderProps) => {
+    const { locale, forcePopperFix } = useAppContext();
+
     const MONTHS =
         typeof locale !== 'undefined'
             ? [...Array(12).keys()].map((d) =>
@@ -62,7 +61,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
 
     const MenuProps = {
         disablePortal: true,
-        ...(!!props.forcePopperFix
+        ...(!!forcePopperFix
             ? {
                   anchorEl: anchorRef?.current,
                   transformOrigin: { vertical: 'bottom', horizontal: 'center' },

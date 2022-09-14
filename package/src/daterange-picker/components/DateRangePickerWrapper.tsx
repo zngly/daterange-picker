@@ -1,12 +1,15 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 
 import { Box, ClickAwayListener } from '@mui/material';
 
 import DateRangePicker from './DateRangePicker';
 import { DateRange, DefinedRange } from '../types';
 
-export interface DateRangePickerWrapperProps {
+export type DateRangePickerWrapperProps = AppContextType & {
     open: boolean;
+};
+
+export type AppContextType = {
     onClose?: () => void;
     onChange?: (dateRange: DateRange) => void;
     initialDateRange?: DateRange;
@@ -17,6 +20,12 @@ export interface DateRangePickerWrapperProps {
     className?: string;
     locale?: Locale;
     forcePopperFix?: boolean;
+};
+
+const AppContext = React.createContext<AppContextType>({});
+
+export function useAppContext() {
+    return React.useContext<AppContextType>(AppContext);
 }
 
 const DateRangePickerWrapper: React.FunctionComponent<DateRangePickerWrapperProps> = (
@@ -51,12 +60,19 @@ const DateRangePickerWrapper: React.FunctionComponent<DateRangePickerWrapperProp
         };
     }, [open, handleKeyPress]);
 
+    const ctx: AppContextType = useMemo(() => {
+        const { open, ...ctxProps } = props;
+        return ctxProps;
+    }, [props]);
+
     if (!open) return <></>;
 
     return (
         <ClickAwayListener onClickAway={handleClose}>
             <Box sx={{ position: 'relative', zIndex: 1 }} className={'drp-wrapper ' + className}>
-                <DateRangePicker {...props} />
+                <AppContext.Provider value={ctx}>
+                    <DateRangePicker />
+                </AppContext.Provider>
             </Box>
         </ClickAwayListener>
     );

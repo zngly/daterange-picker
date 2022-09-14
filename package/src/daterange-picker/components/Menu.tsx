@@ -7,6 +7,7 @@ import Month from './Month';
 import DefinedRanges from './DefinedRanges';
 import { DateRange, DefinedRange, Setter, NavigationAction } from '../types';
 import { MARKERS } from './Markers';
+import { useAppContext } from './DateRangePickerWrapper';
 
 interface MenuProps {
     dateRange: DateRange;
@@ -30,11 +31,11 @@ interface MenuProps {
         // eslint-disable-next-line no-unused-vars
         onMonthNavigate: (marker: symbol, action: NavigationAction) => void;
     };
-    locale?: Locale;
-    forcePopperFix?: boolean;
 }
 
 const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
+    const { locale } = useAppContext();
+
     const {
         ranges,
         dateRange,
@@ -47,7 +48,6 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
         setDateRange,
         helpers,
         handlers,
-        locale,
     } = props;
 
     const { startDate, endDate } = dateRange;
@@ -73,7 +73,6 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
         maxDate,
         helpers,
         handlers,
-        forcePopperFix: props.forcePopperFix,
     };
 
     return (
@@ -107,7 +106,6 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
                             setValue={setFirstMonth}
                             navState={[canNavigateBackwards, canNavigateCloser]}
                             marker={MARKERS.FIRST_MONTH}
-                            locale={locale}
                         />
                         <Divider orientation='vertical' flexItem />
                         <Month
@@ -116,7 +114,6 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
                             setValue={setSecondMonth}
                             navState={[canNavigateCloser, canNavigateForwards]}
                             marker={MARKERS.SECOND_MONTH}
-                            locale={locale}
                         />
                     </Grid>
                 </Grid>

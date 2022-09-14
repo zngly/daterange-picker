@@ -6,6 +6,7 @@ import Header from './Header';
 import Day from './Day';
 
 import { NavigationAction, DateRange } from '../types';
+import { useAppContext } from './DateRangePickerWrapper';
 
 interface MonthProps {
     value: Date;
@@ -28,12 +29,11 @@ interface MonthProps {
         // eslint-disable-next-line no-unused-vars
         onMonthNavigate: (marker: symbol, action: NavigationAction) => void;
     };
-    locale?: Locale;
-    forcePopperFix?: boolean;
 }
 
 const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
-    const { helpers, handlers, value: date, dateRange, marker, setValue: setDate, minDate, maxDate, locale } = props;
+    const { locale } = useAppContext();
+    const { helpers, handlers, value: date, dateRange, marker, setValue: setDate, minDate, maxDate } = props;
 
     const weekStartsOn = locale?.options?.weekStartsOn || 0;
     const WEEK_DAYS = useMemo(
@@ -59,8 +59,6 @@ const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
                     onClickNext={() => handlers.onMonthNavigate(marker, NavigationAction.Next)}
                     minDate={minDate}
                     maxDate={maxDate}
-                    locale={locale}
-                    forcePopperFix={props?.forcePopperFix}
                 />
 
                 <Grid

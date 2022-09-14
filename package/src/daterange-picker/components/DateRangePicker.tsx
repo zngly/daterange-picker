@@ -1,37 +1,23 @@
 import * as React from 'react';
 import { addMonths, addYears, isAfter, isBefore, isSameDay, isSameMonth, isWithinInterval, max, min } from 'date-fns';
-import { DateRange, DefinedRange, NavigationAction } from '../types';
+import { DateRange, NavigationAction } from '../types';
 import { getValidatedMonths, parseOptionalDate } from '../utils';
 import { getDefaultRanges } from '../defaults';
 import Menu from './Menu';
 import { Marker, MARKERS } from './Markers';
+import { useAppContext } from './DateRangePickerWrapper';
 
-// @todo: create OptionalArgs type
-// this can be passed through the app using context
-// this should clean up the props big time
+const DateRangePicker = () => {
+    const props = useAppContext();
 
-interface DateRangePickerProps {
-    open: boolean;
-    initialDateRange?: DateRange;
-    definedRanges?: DefinedRange[];
-    minDate?: Date | string;
-    maxDate?: Date | string;
-    onChange?: (dateRange: DateRange) => void;
-    locale?: Locale;
-    forcePopperFix?: boolean;
-}
-
-const DateRangePicker: React.FunctionComponent<DateRangePickerProps> = (props: DateRangePickerProps) => {
     const today = new Date();
 
     const {
-        open,
         onChange,
         initialDateRange,
         minDate,
         maxDate,
         definedRanges = getDefaultRanges(new Date(), props.locale),
-        locale,
     } = props;
 
     const minDateValid = parseOptionalDate(minDate, addYears(today, -10));
@@ -132,7 +118,7 @@ const DateRangePicker: React.FunctionComponent<DateRangePickerProps> = (props: D
         onMonthNavigate,
     };
 
-    return open ? (
+    return (
         <Menu
             dateRange={dateRange}
             minDate={minDateValid}
@@ -145,10 +131,8 @@ const DateRangePicker: React.FunctionComponent<DateRangePickerProps> = (props: D
             setDateRange={setDateRangeValidated}
             helpers={helpers}
             handlers={handlers}
-            locale={locale}
-            forcePopperFix={props?.forcePopperFix}
         />
-    ) : null;
+    );
 };
 
 export default DateRangePicker;
