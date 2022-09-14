@@ -30,7 +30,12 @@ const PopperDemo = () => {
                     return (
                         <Grow {...TransitionProps}>
                             <Paper>
-                                <DateRangePicker open={open} onClose={() => setOpen(false)} />
+                                <DateRangePicker
+                                    open={open}
+                                    onClose={() => setOpen(false)}
+                                    minDate={new Date('2021-01-01')}
+                                    maxDate={new Date('2023-12-31')}
+                                />
                             </Paper>
                         </Grow>
                     );
