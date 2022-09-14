@@ -9,8 +9,8 @@ const SpecificDateRange = () => {
                 open={true}
                 onChange={() => {}}
                 toggle={() => {}}
-                minDate={new Date('2020-01-01')}
-                maxDate={new Date('2022-12-31')}
+                minDate={new Date('2020-01-10')}
+                maxDate={new Date('2022-12-10')}
             />
         </Container>
     );
