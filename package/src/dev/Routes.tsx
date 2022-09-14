@@ -3,6 +3,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, u
 
 import Root from './Root';
 import Base from './scenario/Base';
+import Popper from './scenario/Popper';
 import SpecificDateRange from './scenario/SpecificDateRange';
 
 const Error = () => {
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
                 <Route path='scenario'>
                     <Route path='base' element={<Base />} />
                     <Route path='specific-date-range' element={<SpecificDateRange />} />
+                    <Route path='popper' element={<Popper />} />
                 </Route>
             </Route>
         </>

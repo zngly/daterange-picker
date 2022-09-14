@@ -48,6 +48,7 @@ const Root = () => {
                         <Grid container spacing={2}>
                             <CustomGrid to='scenario/base' name='Base' />
                             <CustomGrid to='scenario/specific-date-range' name='SpecificDateRange' />
+                            <CustomGrid to='scenario/popper' name='Popper Compatibility' />
                         </Grid>
                     </Paper>
                 </Container>

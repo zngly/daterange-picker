@@ -1,8 +1,9 @@
-import { FormControl, Grid, IconButton, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import React from 'react';
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import { getMonth, getYear, setMonth, setYear } from 'date-fns';
+
+import { FormControl, Grid, IconButton, MenuItem, Select, MenuProps, SelectChangeEvent } from '@mui/material';
 
 interface HeaderProps {
     date: Date;
@@ -55,6 +56,11 @@ const Header: React.FunctionComponent<HeaderProps> = ({
         setDate(setYear(date, parseInt(event.target.value as string, 10)));
     };
 
+    const MenuProps = {
+        disablePortal: true,
+        transformOrigin: { vertical: 'center', horizontal: 'center' },
+    } as Partial<MenuProps>;
+
     return (
         <Grid className='drp-month-header' container justifyContent='space-between' alignItems='center'>
             <Grid item sx={{ padding: '5px' }}>
@@ -74,7 +80,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
             </Grid>
             <Grid item>
                 <FormControl variant='standard' className='drp-header_months'>
-                    <Select value={getMonth(date)} onChange={handleMonthChange} MenuProps={{ disablePortal: true }}>
+                    <Select value={getMonth(date)} onChange={handleMonthChange} MenuProps={MenuProps}>
                         {MONTHS.map((month, idx) => (
                             <MenuItem key={month} value={idx}>
                                 {month}
@@ -86,7 +92,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
 
             <Grid item>
                 <FormControl variant='standard' className='drp-header_year'>
-                    <Select value={getYear(date)} onChange={handleYearChange} MenuProps={{ disablePortal: true }}>
+                    <Select value={getYear(date)} onChange={handleYearChange} MenuProps={MenuProps}>
                         {generateYears(minDate, maxDate).map((year) => (
                             <MenuItem key={year} value={year}>
                                 {year}
