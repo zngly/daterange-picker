@@ -1,0 +1,20 @@
+.root-grid .link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.root-grid .link .card {
+    border: 1px solid gray !important;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* on hover */
+.root-grid .link .card:hover {
+    background-color: aliceblue;
+
+    /* add transition animation */
+    transition: all 0.5s;
+}

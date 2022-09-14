@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DateRangePicker } from 'src/daterange-picker';
+import { Container, Button } from '@mui/material';
 
 const Base = () => {
     const [open, setOpen] = useState(false);
@@ -7,10 +8,10 @@ const Base = () => {
     const toggle = () => setOpen(!open);
 
     return (
-        <div className='App'>
-            <button onClick={toggle} style={{ width: '100px', height: '50px' }}>
+        <Container>
+            <Button onClick={toggle} style={{ width: '100px', height: '50px' }}>
                 Click Me
-            </button>
+            </Button>
             <DateRangePicker
                 open={open}
                 onChange={() => {}}
@@ -19,7 +20,7 @@ const Base = () => {
                 }}
                 className='daterange-picker-wrapper'
             />
-        </div>
+        </Container>
     );
 };
 
