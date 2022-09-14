@@ -12,7 +12,7 @@ interface DateRangePickerProps {
     definedRanges?: DefinedRange[];
     minDate?: Date | string;
     maxDate?: Date | string;
-    onChange: (dateRange: DateRange) => void;
+    onChange?: (dateRange: DateRange) => void;
     locale?: Locale;
 }
 
@@ -65,7 +65,7 @@ const DateRangePicker: React.FunctionComponent<DateRangePickerProps> = (props: D
             range.endDate = newEnd = min([newEnd, maxDateValid]);
 
             setDateRange(range);
-            onChange(range);
+            onChange && onChange(range);
 
             setFirstMonth(newStart);
             setSecondMonth(isSameMonth(newStart, newEnd) ? addMonths(newStart, 1) : newEnd);
@@ -73,7 +73,7 @@ const DateRangePicker: React.FunctionComponent<DateRangePickerProps> = (props: D
             const emptyRange = {};
 
             setDateRange(emptyRange);
-            onChange(emptyRange);
+            onChange && onChange(emptyRange);
 
             setFirstMonth(today);
             setSecondMonth(addMonths(firstMonth, 1));
@@ -83,7 +83,7 @@ const DateRangePicker: React.FunctionComponent<DateRangePickerProps> = (props: D
     const onDayClick = (day: Date) => {
         if (startDate && !endDate && !isBefore(day, startDate)) {
             const newRange = { startDate, endDate: day };
-            onChange(newRange);
+            onChange && onChange(newRange);
             setDateRange(newRange);
         } else {
             setDateRange({ startDate: day, endDate: undefined });

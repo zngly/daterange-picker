@@ -8,7 +8,7 @@ const SpecificDateRange = () => {
             <DateRangePicker
                 open={true}
                 onChange={() => {}}
-                toggle={() => {}}
+                onClose={() => {}}
                 minDate={new Date('2020-01-10')}
                 maxDate={new Date('2022-12-10')}
             />

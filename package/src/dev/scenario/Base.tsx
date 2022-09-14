@@ -5,18 +5,16 @@ import { Container, Button } from '@mui/material';
 const Base = () => {
     const [open, setOpen] = useState(false);
 
-    const toggle = () => setOpen(!open);
-
     return (
         <Container>
-            <Button onClick={toggle} style={{ width: '100px', height: '50px' }}>
+            <Button onClick={() => setOpen(true)} style={{ width: '100px', height: '50px' }}>
                 Click Me
             </Button>
             <DateRangePicker
                 open={open}
                 onChange={() => {}}
-                toggle={() => {
-                    setOpen(!open);
+                onClose={() => {
+                    setOpen(false);
                 }}
                 className='daterange-picker-wrapper'
             />
