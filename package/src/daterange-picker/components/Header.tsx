@@ -15,6 +15,7 @@ interface HeaderProps {
     minDate: Date;
     maxDate: Date;
     locale?: Locale;
+    forcePopperFix?: boolean;
 }
 
 const generateYears = (minDate: Date, maxDate: Date) => {
@@ -40,6 +41,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     minDate,
     maxDate,
     locale,
+    ...props
 }: HeaderProps) => {
     const MONTHS =
         typeof locale !== 'undefined'
@@ -56,14 +58,21 @@ const Header: React.FunctionComponent<HeaderProps> = ({
         setDate(setYear(date, parseInt(event.target.value as string, 10)));
     };
 
+    const anchorRef = React.useRef<HTMLDivElement>(null);
+
     const MenuProps = {
         disablePortal: true,
-        transformOrigin: { vertical: 'bottom', horizontal: 'center' },
-        anchorOrigin: { vertical: 'top', horizontal: 'center' },
+        ...(!!props.forcePopperFix
+            ? {
+                  anchorEl: anchorRef?.current,
+                  transformOrigin: { vertical: 'bottom', horizontal: 'center' },
+                  anchorOrigin: { vertical: 'top', horizontal: 'center' },
+              }
+            : {}),
     } as Partial<MenuProps>;
 
     return (
-        <Grid className='drp-month-header' container justifyContent='space-between' alignItems='center'>
+        <Grid className='drp-month-header' ref={anchorRef} container justifyContent='space-between' alignItems='center'>
             <Grid item sx={{ padding: '5px' }}>
                 <IconButton
                     sx={{

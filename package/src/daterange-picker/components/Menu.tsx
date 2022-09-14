@@ -31,6 +31,7 @@ interface MenuProps {
         onMonthNavigate: (marker: symbol, action: NavigationAction) => void;
     };
     locale?: Locale;
+    forcePopperFix?: boolean;
 }
 
 const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
@@ -72,6 +73,7 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
         maxDate,
         helpers,
         handlers,
+        forcePopperFix: props.forcePopperFix,
     };
 
     return (

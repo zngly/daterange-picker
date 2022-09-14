@@ -29,6 +29,7 @@ interface MonthProps {
         onMonthNavigate: (marker: symbol, action: NavigationAction) => void;
     };
     locale?: Locale;
+    forcePopperFix?: boolean;
 }
 
 const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
@@ -59,6 +60,7 @@ const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
                     minDate={minDate}
                     maxDate={maxDate}
                     locale={locale}
+                    forcePopperFix={props?.forcePopperFix}
                 />
 
                 <Grid

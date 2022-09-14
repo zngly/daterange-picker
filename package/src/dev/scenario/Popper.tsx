@@ -36,6 +36,7 @@ const PopperDemo = () => {
                                     onClose={() => setOpen(false)}
                                     minDate={new window.Date('2022-01-01')}
                                     maxDate={new window.Date()}
+                                    forcePopperFix={true}
                                 />
                             </Paper>
                         </Grow>

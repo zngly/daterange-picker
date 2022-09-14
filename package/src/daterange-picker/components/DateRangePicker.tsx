@@ -6,6 +6,10 @@ import { getDefaultRanges } from '../defaults';
 import Menu from './Menu';
 import { Marker, MARKERS } from './Markers';
 
+// @todo: create OptionalArgs type
+// this can be passed through the app using context
+// this should clean up the props big time
+
 interface DateRangePickerProps {
     open: boolean;
     initialDateRange?: DateRange;
@@ -14,6 +18,7 @@ interface DateRangePickerProps {
     maxDate?: Date | string;
     onChange?: (dateRange: DateRange) => void;
     locale?: Locale;
+    forcePopperFix?: boolean;
 }
 
 const DateRangePicker: React.FunctionComponent<DateRangePickerProps> = (props: DateRangePickerProps) => {
@@ -141,6 +146,7 @@ const DateRangePicker: React.FunctionComponent<DateRangePickerProps> = (props: D
             helpers={helpers}
             handlers={handlers}
             locale={locale}
+            forcePopperFix={props?.forcePopperFix}
         />
     ) : null;
 };
