@@ -56,7 +56,6 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     const anchorRef = React.useRef<HTMLDivElement>(null);
 
     const MenuProps = {
-        keepMounted: true,
         className: 'drp-header-month_menu-portal',
         BackdropProps: {
             className: 'drp-header-month_menu-backdrop-portal',

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { addMonths, isAfter, isBefore, isSameDay, isSameMonth, isWithinInterval, max, min } from 'date-fns';
+import { useAppContext } from './DateRangePickerWrapper';
+import { Marker, MARKERS } from './Markers';
 import { DateRange, NavigationAction } from '../types';
 import { getValidatedMonths } from '../utils';
+
 import Menu from './Menu';
-import { Marker, MARKERS } from './Markers';
-import { useAppContext } from './DateRangePickerWrapper';
 
 const DateRangePicker = () => {
     const props = useAppContext();
