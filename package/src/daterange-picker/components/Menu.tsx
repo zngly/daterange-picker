@@ -39,7 +39,7 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
     const { startDate, endDate } = dateRange;
 
     const canNavigateCloser = useMemo(
-        () => differenceInCalendarMonths(secondMonth, firstMonth) > 2,
+        () => differenceInCalendarMonths(secondMonth, firstMonth) > 1,
         [secondMonth, firstMonth]
     );
 
