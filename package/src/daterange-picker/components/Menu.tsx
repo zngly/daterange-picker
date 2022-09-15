@@ -5,14 +5,12 @@ import { differenceInCalendarMonths, format } from 'date-fns';
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 import Month from './Month';
 import DefinedRanges from './DefinedRanges';
-import { DateRange, DefinedRange, Setter, NavigationAction } from '../types';
+import { DateRange, Setter, NavigationAction } from '../types';
 import { MARKERS } from './Markers';
+import { useAppContext } from './DateRangePickerWrapper';
 
 interface MenuProps {
     dateRange: DateRange;
-    ranges: DefinedRange[];
-    minDate: Date;
-    maxDate: Date;
     firstMonth: Date;
     secondMonth: Date;
     setFirstMonth: Setter<Date>;
@@ -30,30 +28,18 @@ interface MenuProps {
         // eslint-disable-next-line no-unused-vars
         onMonthNavigate: (marker: symbol, action: NavigationAction) => void;
     };
-    locale?: Locale;
-    forcePopperFix?: boolean;
 }
 
 const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
-    const {
-        ranges,
-        dateRange,
-        minDate,
-        maxDate,
-        firstMonth,
-        setFirstMonth,
-        secondMonth,
-        setSecondMonth,
-        setDateRange,
-        helpers,
-        handlers,
-        locale,
-    } = props;
+    const { locale, minDate, maxDate } = useAppContext();
+
+    const { dateRange, firstMonth, setFirstMonth, secondMonth, setSecondMonth, setDateRange, helpers, handlers } =
+        props;
 
     const { startDate, endDate } = dateRange;
 
     const canNavigateCloser = useMemo(
-        () => differenceInCalendarMonths(secondMonth, firstMonth) > 2,
+        () => differenceInCalendarMonths(secondMonth, firstMonth) > 1,
         [secondMonth, firstMonth]
     );
 
@@ -69,18 +55,15 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
 
     const commonProps = {
         dateRange,
-        minDate,
-        maxDate,
         helpers,
         handlers,
-        forcePopperFix: props.forcePopperFix,
     };
 
     return (
         <Paper elevation={5} square className='drp-menu'>
             <Grid container direction='row' wrap='nowrap'>
                 <Grid>
-                    <DefinedRanges selectedRange={dateRange} ranges={ranges} setRange={setDateRange} />
+                    <DefinedRanges selectedRange={dateRange} setRange={setDateRange} />
                 </Grid>
                 <Divider orientation='vertical' flexItem />
                 <Grid>
@@ -107,7 +90,6 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
                             setValue={setFirstMonth}
                             navState={[canNavigateBackwards, canNavigateCloser]}
                             marker={MARKERS.FIRST_MONTH}
-                            locale={locale}
                         />
                         <Divider orientation='vertical' flexItem />
                         <Month
@@ -116,7 +98,6 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
                             setValue={setSecondMonth}
                             navState={[canNavigateCloser, canNavigateForwards]}
                             marker={MARKERS.SECOND_MONTH}
-                            locale={locale}
                         />
                     </Grid>
                 </Grid>

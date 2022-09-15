@@ -4,6 +4,7 @@ import ChevronRight from '@mui/icons-material/ChevronRight';
 import { getMonth, getYear, setMonth, setYear } from 'date-fns';
 
 import { FormControl, Grid, IconButton, MenuItem, Select, MenuProps, SelectChangeEvent } from '@mui/material';
+import { useAppContext } from './DateRangePickerWrapper';
 
 interface HeaderProps {
     date: Date;
@@ -12,10 +13,6 @@ interface HeaderProps {
     prevDisabled: boolean;
     onClickNext: () => void;
     onClickPrevious: () => void;
-    minDate: Date;
-    maxDate: Date;
-    locale?: Locale;
-    forcePopperFix?: boolean;
 }
 
 const generateYears = (minDate: Date, maxDate: Date) => {
@@ -38,11 +35,9 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     prevDisabled,
     onClickNext,
     onClickPrevious,
-    minDate,
-    maxDate,
-    locale,
-    ...props
 }: HeaderProps) => {
+    const { locale, minDate, maxDate } = useAppContext();
+
     const MONTHS =
         typeof locale !== 'undefined'
             ? [...Array(12).keys()].map((d) =>
@@ -61,14 +56,16 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     const anchorRef = React.useRef<HTMLDivElement>(null);
 
     const MenuProps = {
-        disablePortal: true,
-        ...(!!props.forcePopperFix
-            ? {
-                  anchorEl: anchorRef?.current,
-                  transformOrigin: { vertical: 'bottom', horizontal: 'center' },
-                  anchorOrigin: { vertical: 'top', horizontal: 'center' },
-              }
-            : {}),
+        className: 'drp-header-month_menu-portal',
+        BackdropProps: {
+            className: 'drp-header-month_menu-backdrop-portal',
+            style: {
+                backgroundColor: 'unset',
+            },
+        },
+        PaperProps: {
+            className: 'drp-header-month_select-paper-portal',
+        },
     } as Partial<MenuProps>;
 
     return (
@@ -90,7 +87,12 @@ const Header: React.FunctionComponent<HeaderProps> = ({
             </Grid>
             <Grid item>
                 <FormControl variant='standard' className='drp-header_months'>
-                    <Select value={getMonth(date)} onChange={handleMonthChange} MenuProps={MenuProps}>
+                    <Select
+                        className='drp-header-month_select'
+                        value={getMonth(date)}
+                        onChange={handleMonthChange}
+                        MenuProps={MenuProps}
+                    >
                         {MONTHS.map((month, idx) => (
                             <MenuItem key={month} value={idx}>
                                 {month}
