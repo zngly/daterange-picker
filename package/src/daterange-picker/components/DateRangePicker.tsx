@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { addMonths, addYears, isAfter, isBefore, isSameDay, isSameMonth, isWithinInterval, max, min } from 'date-fns';
+import { addMonths, isAfter, isBefore, isSameDay, isSameMonth, isWithinInterval, max, min } from 'date-fns';
 import { DateRange, NavigationAction } from '../types';
-import { getValidatedMonths, parseOptionalDate } from '../utils';
-import { getDefaultRanges } from '../defaults';
+import { getValidatedMonths } from '../utils';
 import Menu from './Menu';
 import { Marker, MARKERS } from './Markers';
 import { useAppContext } from './DateRangePickerWrapper';
@@ -10,23 +9,11 @@ import { useAppContext } from './DateRangePickerWrapper';
 const DateRangePicker = () => {
     const props = useAppContext();
 
+    const { onChange, initialDateRange, minDate, maxDate } = props;
+
     const today = new Date();
 
-    const {
-        onChange,
-        initialDateRange,
-        minDate,
-        maxDate,
-        definedRanges = getDefaultRanges(new Date(), props.locale),
-    } = props;
-
-    const minDateValid = parseOptionalDate(minDate, addYears(today, -10));
-    const maxDateValid = parseOptionalDate(maxDate, addYears(today, 10));
-    const [intialFirstMonth, initialSecondMonth] = getValidatedMonths(
-        initialDateRange || {},
-        minDateValid,
-        maxDateValid
-    );
+    const [intialFirstMonth, initialSecondMonth] = getValidatedMonths(initialDateRange || {}, minDate, maxDate);
 
     const [dateRange, setDateRange] = React.useState<DateRange>({ ...initialDateRange });
     const [hoverDay, setHoverDay] = React.useState<Date>();
@@ -52,8 +39,8 @@ const DateRangePicker = () => {
         let { startDate: newStart, endDate: newEnd } = range;
 
         if (newStart && newEnd) {
-            range.startDate = newStart = max([newStart, minDateValid]);
-            range.endDate = newEnd = min([newEnd, maxDateValid]);
+            range.startDate = newStart = max([newStart, minDate]);
+            range.endDate = newEnd = min([newEnd, maxDate]);
 
             setDateRange(range);
             onChange && onChange(range);
@@ -121,9 +108,6 @@ const DateRangePicker = () => {
     return (
         <Menu
             dateRange={dateRange}
-            minDate={minDateValid}
-            maxDate={maxDateValid}
-            ranges={definedRanges}
             firstMonth={firstMonth}
             secondMonth={secondMonth}
             setFirstMonth={setFirstMonthValidated}

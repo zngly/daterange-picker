@@ -1,13 +1,12 @@
 import React from 'react';
 import { List, ListItem, ListItemText } from '@mui/material';
 import { isSameDay } from 'date-fns';
-import { DateRange, DefinedRange } from '../types';
+import { DateRange } from '../types';
+import { useAppContext } from './DateRangePickerWrapper';
 
 type DefinedRangesProps = {
-    // eslint-disable-next-line no-unused-vars
     setRange: (range: DateRange) => void;
     selectedRange: DateRange;
-    ranges: DefinedRange[];
 };
 
 const isSameRange = (first: DateRange, second: DateRange) => {
@@ -20,39 +19,46 @@ const isSameRange = (first: DateRange, second: DateRange) => {
 };
 
 const DefinedRanges: React.FunctionComponent<DefinedRangesProps> = ({
-    ranges,
     setRange,
     selectedRange,
-}: DefinedRangesProps) => (
-    <List className='drp-defined-ranges'>
-        {ranges.map((range, idx) => (
-            <ListItem
-                className='drp-defined-ranges-item'
-                key={idx}
-                onClick={() => setRange(range)}
-                sx={[
-                    isSameRange(range, selectedRange) && {
-                        backgroundColor: (theme) => theme.palette.primary.dark,
-                        color: 'primary.contrastText',
-                        '&:hover': {
-                            color: 'inherit',
+}: DefinedRangesProps) => {
+    const { definedRanges } = useAppContext();
+    return (
+        <List className='drp-defined-ranges'>
+            {definedRanges.map((range, idx) => (
+                <ListItem
+                    className='drp-defined-ranges-item'
+                    key={idx}
+                    onClick={() => setRange(range)}
+                    sx={[
+                        isSameRange(range, selectedRange) && {
+                            backgroundColor: (theme) => theme.palette.primary.dark,
+                            color: 'primary.contrastText',
+                            '&:hover': {
+                                color: 'inherit',
+                            },
                         },
-                    },
-                ]}
-            >
-                <ListItemText
-                    primaryTypographyProps={{
-                        variant: 'body2',
-                        sx: {
-                            fontWeight: isSameRange(range, selectedRange) ? 'bold' : 'normal',
-                        },
-                    }}
+                    ]}
                 >
-                    <span>{range.label}</span>
-                </ListItemText>
-            </ListItem>
-        ))}
-    </List>
-);
+                    <ListItemText
+                        primaryTypographyProps={{
+                            variant: 'body2',
+                            sx: {
+                                fontWeight: isSameRange(range, selectedRange) ? 'bold' : 'normal',
+                            },
+                        }}
+                        sx={{
+                            '&:hover': {
+                                cursor: 'pointer',
+                            },
+                        }}
+                    >
+                        <span>{range.label}</span>
+                    </ListItemText>
+                </ListItem>
+            ))}
+        </List>
+    );
+};
 
 export default DefinedRanges;

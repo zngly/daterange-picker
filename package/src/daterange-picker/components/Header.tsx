@@ -13,8 +13,6 @@ interface HeaderProps {
     prevDisabled: boolean;
     onClickNext: () => void;
     onClickPrevious: () => void;
-    minDate: Date;
-    maxDate: Date;
 }
 
 const generateYears = (minDate: Date, maxDate: Date) => {
@@ -37,10 +35,8 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     prevDisabled,
     onClickNext,
     onClickPrevious,
-    minDate,
-    maxDate,
 }: HeaderProps) => {
-    const { locale } = useAppContext();
+    const { locale, minDate, maxDate } = useAppContext();
 
     const MONTHS =
         typeof locale !== 'undefined'

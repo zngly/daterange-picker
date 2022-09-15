@@ -5,15 +5,12 @@ import { differenceInCalendarMonths, format } from 'date-fns';
 import ArrowRightAlt from '@mui/icons-material/ArrowRightAlt';
 import Month from './Month';
 import DefinedRanges from './DefinedRanges';
-import { DateRange, DefinedRange, Setter, NavigationAction } from '../types';
+import { DateRange, Setter, NavigationAction } from '../types';
 import { MARKERS } from './Markers';
 import { useAppContext } from './DateRangePickerWrapper';
 
 interface MenuProps {
     dateRange: DateRange;
-    ranges: DefinedRange[];
-    minDate: Date;
-    maxDate: Date;
     firstMonth: Date;
     secondMonth: Date;
     setFirstMonth: Setter<Date>;
@@ -34,21 +31,10 @@ interface MenuProps {
 }
 
 const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
-    const { locale } = useAppContext();
+    const { locale, minDate, maxDate } = useAppContext();
 
-    const {
-        ranges,
-        dateRange,
-        minDate,
-        maxDate,
-        firstMonth,
-        setFirstMonth,
-        secondMonth,
-        setSecondMonth,
-        setDateRange,
-        helpers,
-        handlers,
-    } = props;
+    const { dateRange, firstMonth, setFirstMonth, secondMonth, setSecondMonth, setDateRange, helpers, handlers } =
+        props;
 
     const { startDate, endDate } = dateRange;
 
@@ -69,8 +55,6 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
 
     const commonProps = {
         dateRange,
-        minDate,
-        maxDate,
         helpers,
         handlers,
     };
@@ -79,7 +63,7 @@ const Menu: React.FunctionComponent<MenuProps> = (props: MenuProps) => {
         <Paper elevation={5} square className='drp-menu'>
             <Grid container direction='row' wrap='nowrap'>
                 <Grid>
-                    <DefinedRanges selectedRange={dateRange} ranges={ranges} setRange={setDateRange} />
+                    <DefinedRanges selectedRange={dateRange} setRange={setDateRange} />
                 </Grid>
                 <Divider orientation='vertical' flexItem />
                 <Grid>

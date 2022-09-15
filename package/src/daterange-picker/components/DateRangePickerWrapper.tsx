@@ -4,12 +4,12 @@ import { Box, ClickAwayListener } from '@mui/material';
 
 import DateRangePicker from './DateRangePicker';
 import { DateRange, DefinedRange } from '../types';
+import { addYears, subYears } from 'date-fns';
+import { parseOptionalDate } from '../utils';
+import { getDefaultRanges } from '../defaults';
 
-export type DateRangePickerWrapperProps = AppContextType & {
+export type DateRangePickerWrapperProps = {
     open: boolean;
-};
-
-export type AppContextType = {
     onClose?: () => void;
     onChange?: (dateRange: DateRange) => void;
     initialDateRange?: DateRange;
@@ -21,7 +21,20 @@ export type AppContextType = {
     locale?: Locale;
 };
 
-const AppContext = React.createContext<AppContextType>({});
+export type AppContextType = {
+    onChange?: (dateRange: DateRange) => void;
+    initialDateRange?: DateRange;
+    definedRanges: DefinedRange[];
+    minDate: Date;
+    maxDate: Date;
+    locale?: Locale;
+};
+
+const AppContext = React.createContext<AppContextType>({
+    minDate: subYears(new Date(), 10),
+    maxDate: addYears(new Date(), 10),
+    definedRanges: [],
+});
 
 export function useAppContext() {
     return React.useContext<AppContextType>(AppContext);
@@ -47,6 +60,7 @@ const DateRangePickerWrapper: React.FunctionComponent<DateRangePickerWrapperProp
         [handleClose]
     );
 
+    // add keypress listener for when the picker is open
     useEffect(() => {
         if (!open) return;
 
@@ -76,9 +90,24 @@ const DateRangePickerWrapper: React.FunctionComponent<DateRangePickerWrapperProp
         [handleClose]
     );
 
+    // compute context
     const ctx: AppContextType = useMemo(() => {
-        const { open, ...ctxProps } = props;
-        return ctxProps;
+        const { open, onChange, ...ctxProps } = props;
+
+        const today = new Date();
+
+        // compute the min & max dates
+        const minDateValid = parseOptionalDate(ctxProps.minDate, addYears(today, -10));
+        const maxDateValid = parseOptionalDate(ctxProps.maxDate, addYears(today, 10));
+
+        return {
+            ...ctxProps,
+            minDate: minDateValid,
+            maxDate: maxDateValid,
+            definedRanges: !ctxProps.definedRanges
+                ? getDefaultRanges(new Date(), props.locale)
+                : ctxProps.definedRanges,
+        };
     }, [props]);
 
     if (!open) return <></>;

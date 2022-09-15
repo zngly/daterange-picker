@@ -12,8 +12,6 @@ interface MonthProps {
     value: Date;
     marker: symbol;
     dateRange: DateRange;
-    minDate: Date;
-    maxDate: Date;
     navState: [boolean, boolean];
     // eslint-disable-next-line no-unused-vars
     setValue: (date: Date) => void;
@@ -32,8 +30,8 @@ interface MonthProps {
 }
 
 const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
-    const { locale } = useAppContext();
-    const { helpers, handlers, value: date, dateRange, marker, setValue: setDate, minDate, maxDate } = props;
+    const { locale, minDate, maxDate } = useAppContext();
+    const { helpers, handlers, value: date, dateRange, marker, setValue: setDate } = props;
 
     const weekStartsOn = locale?.options?.weekStartsOn || 0;
     const WEEK_DAYS = useMemo(
@@ -57,8 +55,6 @@ const Month: React.FunctionComponent<MonthProps> = (props: MonthProps) => {
                     prevDisabled={!back}
                     onClickPrevious={() => handlers.onMonthNavigate(marker, NavigationAction.Previous)}
                     onClickNext={() => handlers.onMonthNavigate(marker, NavigationAction.Next)}
-                    minDate={minDate}
-                    maxDate={maxDate}
                 />
 
                 <Grid
