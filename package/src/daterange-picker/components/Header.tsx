@@ -53,8 +53,6 @@ const Header: React.FunctionComponent<HeaderProps> = ({
         setDate(setYear(date, parseInt(event.target.value as string, 10)));
     };
 
-    const anchorRef = React.useRef<HTMLDivElement>(null);
-
     const MenuProps = {
         className: 'drp-header-month_menu-portal',
         BackdropProps: {
@@ -69,7 +67,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     } as Partial<MenuProps>;
 
     return (
-        <Grid className='drp-month-header' ref={anchorRef} container justifyContent='space-between' alignItems='center'>
+        <Grid className='drp-month-header' container justifyContent='space-between' alignItems='center'>
             <Grid item sx={{ padding: '5px' }}>
                 <IconButton
                     sx={{
