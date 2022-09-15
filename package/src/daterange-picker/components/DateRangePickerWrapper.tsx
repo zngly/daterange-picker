@@ -92,7 +92,7 @@ const DateRangePickerWrapper: React.FunctionComponent<DateRangePickerWrapperProp
 
     // compute context
     const ctx: AppContextType = useMemo(() => {
-        const { open, onChange, ...ctxProps } = props;
+        const { open, ...ctxProps } = props;
 
         const today = new Date();
 

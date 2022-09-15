@@ -10,14 +10,7 @@ const Base = () => {
             <Button onClick={() => setOpen(!open)} style={{ width: '100px', height: '50px' }}>
                 Click Me
             </Button>
-            <DateRangePicker
-                open={open}
-                onChange={() => {}}
-                onClose={() => {
-                    setOpen(false);
-                }}
-                className='daterange-picker-wrapper'
-            />
+            <DateRangePicker className='daterange-picker-wrapper' open={open} onClose={() => setOpen(false)} />
         </Container>
     );
 };
