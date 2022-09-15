@@ -40,7 +40,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     minDate,
     maxDate,
 }: HeaderProps) => {
-    const { locale, forcePopperFix } = useAppContext();
+    const { locale } = useAppContext();
 
     const MONTHS =
         typeof locale !== 'undefined'
@@ -60,14 +60,17 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     const anchorRef = React.useRef<HTMLDivElement>(null);
 
     const MenuProps = {
-        disablePortal: true,
-        ...(!!forcePopperFix
-            ? {
-                  anchorEl: anchorRef?.current,
-                  transformOrigin: { vertical: 'bottom', horizontal: 'center' },
-                  anchorOrigin: { vertical: 'top', horizontal: 'center' },
-              }
-            : {}),
+        keepMounted: true,
+        className: 'drp-header-month_menu-portal',
+        BackdropProps: {
+            className: 'drp-header-month_menu-backdrop-portal',
+            style: {
+                backgroundColor: 'unset',
+            },
+        },
+        PaperProps: {
+            className: 'drp-header-month_select-paper-portal',
+        },
     } as Partial<MenuProps>;
 
     return (
@@ -89,7 +92,12 @@ const Header: React.FunctionComponent<HeaderProps> = ({
             </Grid>
             <Grid item>
                 <FormControl variant='standard' className='drp-header_months'>
-                    <Select value={getMonth(date)} onChange={handleMonthChange} MenuProps={MenuProps}>
+                    <Select
+                        className='drp-header-month_select'
+                        value={getMonth(date)}
+                        onChange={handleMonthChange}
+                        MenuProps={MenuProps}
+                    >
                         {MONTHS.map((month, idx) => (
                             <MenuItem key={month} value={idx}>
                                 {month}

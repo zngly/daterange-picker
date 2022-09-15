@@ -19,7 +19,6 @@ export type AppContextType = {
     closeOnClickOutside?: boolean;
     className?: string;
     locale?: Locale;
-    forcePopperFix?: boolean;
 };
 
 const AppContext = React.createContext<AppContextType>({});
@@ -60,6 +59,23 @@ const DateRangePickerWrapper: React.FunctionComponent<DateRangePickerWrapperProp
         };
     }, [open, handleKeyPress]);
 
+    const clickAwayHandler = useCallback(
+        (e: MouseEvent | TouchEvent) => {
+            const target = e?.target as HTMLElement;
+
+            // address issue with popper closing when a select portal is active
+            const classNames = ['drp-header-month_select-portal', 'drp-header-month_select'];
+
+            // these are all events within the date range picker. ignore them
+            if (classNames.some((className) => target?.classList?.contains(className))) return;
+            if (target?.className.includes('drp-header-month')) return;
+            if (target?.localName === 'body') return;
+
+            handleClose();
+        },
+        [handleClose]
+    );
+
     const ctx: AppContextType = useMemo(() => {
         const { open, ...ctxProps } = props;
         return ctxProps;
@@ -68,7 +84,7 @@ const DateRangePickerWrapper: React.FunctionComponent<DateRangePickerWrapperProp
     if (!open) return <></>;
 
     return (
-        <ClickAwayListener onClickAway={handleClose}>
+        <ClickAwayListener onClickAway={clickAwayHandler}>
             <Box sx={{ position: 'relative', zIndex: 1 }} className={'drp-wrapper ' + className}>
                 <AppContext.Provider value={ctx}>
                     <DateRangePicker />

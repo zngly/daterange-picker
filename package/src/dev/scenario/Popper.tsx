@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '@mui/system';
+import { Stack } from '@mui/system';
 import { DateRangePicker } from 'src/daterange-picker';
 import { Button, Popper, Grow, Paper } from '@mui/material';
 
@@ -9,13 +9,12 @@ const PopperDemo = () => {
     const anchorRef = React.useRef<HTMLButtonElement>(null);
 
     const handleToggle = () => {
-        console.log(open);
         if (!open) setOpen(true);
         else setOpen(false);
     };
 
     return (
-        <Container sx={{ padding: 2 }}>
+        <Stack sx={{ padding: 2 }} direction='row' justifyContent='center'>
             <Button ref={anchorRef} onClick={handleToggle}>
                 Open DateRange Picker
             </Button>
@@ -36,14 +35,13 @@ const PopperDemo = () => {
                                     onClose={() => setOpen(false)}
                                     minDate={new window.Date('2022-01-01')}
                                     maxDate={new window.Date()}
-                                    forcePopperFix={true}
                                 />
                             </Paper>
                         </Grow>
                     );
                 }}
             </Popper>
-        </Container>
+        </Stack>
     );
 };
 
